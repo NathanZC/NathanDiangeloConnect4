@@ -10,6 +10,7 @@ public class Driver {
 
 		
 		// Diangelo is the best
+		//Nathan is the worst
 		// Setup constants for the Board
 		final int ROWS = 7;
 		final int COLS = 7;
