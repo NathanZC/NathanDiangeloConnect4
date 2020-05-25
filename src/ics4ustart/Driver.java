@@ -10,7 +10,8 @@ public class Driver {
 
 		
 		// Diangelo is not the best
-		//Nathan is the worst
+
+  	//Nathan is the worst
 		// git hub is such a good invention 
 		// Setup constants for the Board
 		final int ROWS = 7;
