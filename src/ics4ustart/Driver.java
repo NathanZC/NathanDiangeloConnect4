@@ -8,6 +8,8 @@ public class Driver {
 
 	public static void main(String[] args) throws InterruptedException {
 
+		
+		// Diangelo is the best
 		// Setup constants for the Board
 		final int ROWS = 7;
 		final int COLS = 7;
