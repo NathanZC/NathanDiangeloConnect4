@@ -156,7 +156,7 @@ public class Board {
 				}
 			}
 		}
-//both of these only check the diagonals from the left side to the right side 
+//both of these only check the diagonals from the left side to the right side (Bottom left to top right)
 		int diagonalCounterP1 = 0;
 		int diagonalCounterP2 = 0;
 		for (int k = 0; k < board.length; k++) {
@@ -170,7 +170,7 @@ public class Board {
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[j][i].getState() == CellState.P2) {
+				if (board[i][i].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
@@ -197,7 +197,7 @@ public class Board {
 			for (int j = 0; j <= k; j++) {
 				int i = k - j;
 				System.out.print(board[board[0].length - j - 1][board[0].length - i - 1] + " ");
-				if (board[i][j].getState() == CellState.P1) {
+				if (board[j][i].getState() == CellState.P1) {
 					diagonalCounterP1++;
 
 				} else {
@@ -225,6 +225,79 @@ public class Board {
 			System.out.println("");
 
 		}
+		
+		
+		//reverse diagonal (Bottom right to top left)
+		
+		for (int i = board.length - 1; i > 0; i--) {
+			diagonalCounterP1 = 0;
+			diagonalCounterP2 = 0;
+		       //String temp = "";
+		       for (int j = 0, x = i; x <= board.length - 1; j++, x++) {
+		          //temp = temp + board[x][j];
+		    	   if (board[x][j].getState() == CellState.P1) {
+						diagonalCounterP1++;
+
+					} else {
+						diagonalCounterP1 = 0;
+					}
+					if (board[x][i].getState() == CellState.P2) {
+						diagonalCounterP2++;
+					} else {
+						diagonalCounterP2 = 0;
+					}
+
+					if (diagonalCounterP1 >= 4) {
+						gameOver = true;
+						System.out.println("GAME OVER Player 1 WINS!");
+						break;
+					}
+					if (diagonalCounterP2 >= 4) {
+						gameOver = true;
+						System.out.println("GAME OVER Player 2 WINS!");
+						break;
+
+					}
+		       }
+		       //System.out.println(temp);
+		   }
+		
+		 
+		 for (int i = 0; i <= board.length - 1; i++) {
+			 	diagonalCounterP1 = 0;
+				diagonalCounterP2 = 0;
+		       // String temp = "";
+		        for (int j = 0, z = i; z <= board.length - 1; j++, z++) {
+		       // temp = temp+board[j][z];
+		        	if (board[j][z].getState() == CellState.P1) {
+						diagonalCounterP1++;
+
+					} else {
+						diagonalCounterP1 = 0;
+					}
+					if (board[j][z].getState() == CellState.P2) {
+						diagonalCounterP2++;
+					} else {
+						diagonalCounterP2 = 0;
+					}
+
+					if (diagonalCounterP1 >= 4) {
+						gameOver = true;
+						System.out.println("GAME OVER Player 1 WINS!");
+						break;
+					}
+					if (diagonalCounterP2 >= 4) {
+						gameOver = true;
+						System.out.println("GAME OVER Player 2 WINS!");
+						break;
+
+					}
+		        }
+		       // System.out.println(temp);
+		   }
+		
+		
+		
 		return gameOver;
 	}
 }
