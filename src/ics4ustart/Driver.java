@@ -3,12 +3,12 @@ package ics4ustart;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
 public class Driver {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		
+		Random rand = new Random();
 		// Diangelo is not the best
 		// Setup constants for the Board
 		final int ROWS = 7;
@@ -57,7 +57,35 @@ public class Driver {
 
 		if (mode.equals("PvC")) {
 			System.out.println("Playing vs Computer");
+			int column = 0;
+			boolean pOneTurn = true;
+			boolean ptwoTurn = false;
+			//game loop
+			while (!board.gameOver()) {
+				board.display();
+				if (pOneTurn) {
+					System.out.println("Your Turn");
+					column = getColumn();
+					//to fix invalid inputs
+					while (!board.isValid(column)) {
+						System.out.println("invaid Input. Try again");
+						column = getColumn();
+					}
+					board.dropPeice(column, 1);
+					//to toggle turns
+					pOneTurn = false;
+					ptwoTurn = true;
+				} else if (ptwoTurn) {
+					System.out.println("AI's Turn");
+					column = rand.nextInt(7);
+					board.dropPeice(column, 2);
+					//to toggle turns
+					pOneTurn = true;
+					ptwoTurn = false;
+				}
 
+			}
+			board.display();
 		}
 
 	}
