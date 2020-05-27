@@ -1,6 +1,15 @@
 package ics4ustart;
 
 import java.util.Random;
+/**
+ * Connect 4 with two modes. PVP and PVC. The goal of the game is to 
+ * connect 4 of your pieces in a row. The first player to do so wins. 
+ * 
+ * 
+ * @author Cox.N and DaSilva.D
+ *
+ */
+
 
 public class Board {
 	private Cell[][] board;
@@ -18,14 +27,25 @@ public class Board {
 		}
 	}
 
+	/**
+	 * @return rows
+	 */
 	public int getRows() {
 		return rows;
 	}
 
+	/**
+	 * @return cols
+	 */
 	public int getCols() {
 		return cols;
 	}
 
+	/**
+	 * drops the piece where the player chose
+	 * @param col column on board 
+	 * @param player P1 or P2
+	 */
 	public void dropPeice(int col, int player) {
 
 		if (player == 1) {
@@ -36,6 +56,10 @@ public class Board {
 
 	}
 
+	/**
+	 * @param col column
+	 * @return row position
+	 */
 	private int nextAvalibleRowInCol(int col) {
 		boolean emptySpotFound = false;
 		int rowPosition = rows - 1;
@@ -63,6 +87,11 @@ public class Board {
 
 	}
 
+	/**
+	 * Checks if users input of column is valid
+	 * @param x column number
+	 * @return true if valid else false
+	 */
 	public boolean isValid(int x) {
 		boolean valid = false;
 		// checks column input to see if in range of the board columns
@@ -77,6 +106,9 @@ public class Board {
 		return valid;
 	}
 
+	/**
+	 * Display Board 
+	 */
 	public void display() {
 		System.out.println("BOARD");
 		for (int i = 0; i < rows; i++) {
@@ -87,9 +119,11 @@ public class Board {
 		}
 	}
 
-	/*
+	
+	/**
 	 * determines if the game state should be over. If either the board is full or a
 	 * player connected 4 pieces.
+	 * @return True if game is over
 	 */
 	public boolean gameOver() {
 		boolean gameOver = false;

@@ -19,6 +19,9 @@ public class Cell {
 		return state;
 	}
 
+	/**
+	 *prints "X", "O", or"-"
+	 */
 	public String toString() {
 		switch (state) {
 		case P1:

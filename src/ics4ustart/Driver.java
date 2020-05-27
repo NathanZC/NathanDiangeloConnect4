@@ -9,10 +9,7 @@ public class Driver {
 	public static void main(String[] args) throws InterruptedException {
 
 		Random rand = new Random();
-		// Diangelo is not the best
-
-  	//Nathan is the worst
-		// git hub is such a good invention 
+	
 		// Setup constants for the Board
 		final int ROWS = 7;
 		final int COLS = 7;
@@ -20,6 +17,8 @@ public class Driver {
 		Board board = new Board(ROWS, COLS);
 		String mode = selectGameMode();
 
+		
+		//Player VS player mode
 		if (mode.equals("PvP")) {
 			System.out.println("Playing vs player");
 			int column = 0;
@@ -57,7 +56,9 @@ public class Driver {
 			}
 			board.display();
 		}
-
+		
+		
+		//Player VS AI mode
 		if (mode.equals("PvC")) {
 			System.out.println("Playing vs Computer");
 			int column = 0;
@@ -93,6 +94,10 @@ public class Driver {
 
 	}
 
+	/**
+	 * Select game mode (PVP or PVC)
+	 * @return
+	 */
 	private static String selectGameMode() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Type 1 for Player Vs AI \nType 2 for two player mode");
@@ -109,6 +114,10 @@ public class Driver {
 
 	}
 
+	/**
+	 * Get Column from user to drop piece
+	 * @return column user input
+	 */
 	private static int getColumn() {
 		boolean valid = false;
 		int column = 0;
