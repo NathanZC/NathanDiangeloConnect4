@@ -196,7 +196,7 @@ public class Board {
 			diagonalCounterP2 = 0;
 			for (int j = 0; j <= k; j++) {
 				int i = k - j;
-				System.out.print(board[board[0].length - j - 1][board[0].length - i - 1] + " ");
+				
 				if (board[i][j].getState() == CellState.P1) {
 					diagonalCounterP1++;
 
@@ -222,9 +222,10 @@ public class Board {
 				}
 
 			}
-			System.out.println("");
+			
 
 		}
+		System.out.println("");
 		return gameOver;
 	}
 }
