@@ -4,12 +4,13 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 public class Driver {
 
 	public static void main(String[] args) throws InterruptedException {
 
 		Random rand = new Random();
-	
+
 		// Setup constants for the Board
 		final int ROWS = 7;
 		final int COLS = 7;
@@ -17,26 +18,25 @@ public class Driver {
 		Board board = new Board(ROWS, COLS);
 		String mode = selectGameMode();
 
-		
-		//Player VS player mode
+		// Player VS player mode
 		if (mode.equals("PvP")) {
 			System.out.println("Playing vs player");
 			int column = 0;
 			boolean pOneTurn = true;
 			boolean ptwoTurn = false;
-			//game loop
+			// game loop
 			while (!board.gameOver()) {
 				board.display();
 				if (pOneTurn) {
 					System.out.println("Player 1 turn");
 					column = getColumn();
-					//to fix invalid inputs
+					// to fix invalid inputs
 					while (!board.isValid(column)) {
 						System.out.println("invaid Input. Try again");
 						column = getColumn();
 					}
 					board.dropPeice(column, 1);
-					//to toggle turns
+					// to toggle turns
 					pOneTurn = false;
 					ptwoTurn = true;
 				} else if (ptwoTurn) {
@@ -45,10 +45,10 @@ public class Driver {
 					while (!board.isValid(column)) {
 						System.out.println("invaid Input. Try again");
 						column = getColumn();
-						
+
 					}
 					board.dropPeice(column, 2);
-					//to toggle turns
+					// to toggle turns
 					pOneTurn = true;
 					ptwoTurn = false;
 				}
@@ -56,34 +56,33 @@ public class Driver {
 			}
 			board.display();
 		}
-		
-		
-		//Player VS AI mode
+
+		// Player VS AI mode
 		if (mode.equals("PvC")) {
 			System.out.println("Playing vs Computer");
 			int column = 0;
 			boolean pOneTurn = true;
 			boolean ptwoTurn = false;
-			//game loop
+			// game loop
 			while (!board.gameOver()) {
 				board.display();
 				if (pOneTurn) {
 					System.out.println("Your Turn");
 					column = getColumn();
-					//to fix invalid inputs
+					// to fix invalid inputs
 					while (!board.isValid(column)) {
 						System.out.println("invaid Input. Try again");
 						column = getColumn();
 					}
 					board.dropPeice(column, 1);
-					//to toggle turns
+					// to toggle turns
 					pOneTurn = false;
 					ptwoTurn = true;
 				} else if (ptwoTurn) {
 					System.out.println("AI's Turn");
 					column = rand.nextInt(7);
 					board.dropPeice(column, 2);
-					//to toggle turns
+					// to toggle turns
 					pOneTurn = true;
 					ptwoTurn = false;
 				}
@@ -96,6 +95,7 @@ public class Driver {
 
 	/**
 	 * Select game mode (PVP or PVC)
+	 * 
 	 * @return
 	 */
 	private static String selectGameMode() {
@@ -116,6 +116,7 @@ public class Driver {
 
 	/**
 	 * Get Column from user to drop piece
+	 * 
 	 * @return column user input
 	 */
 	private static int getColumn() {
@@ -126,7 +127,8 @@ public class Driver {
 		System.out.print("Which Column (1-7) :");
 		column = Integer.parseInt(in.nextLine().trim());
 
-		// -1 so the first index of the columns will be 0 so if they input 1 it will be 0
+		// -1 so the first index of the columns will be 0 so if they input 1 it will be
+		// 0
 		// wich is 1st index of the array of columns
 		return column - 1;
 

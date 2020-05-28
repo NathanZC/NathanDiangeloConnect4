@@ -1,15 +1,15 @@
 package ics4ustart;
 
 import java.util.Random;
+
 /**
- * Connect 4 with two modes. PVP and PVC. The goal of the game is to 
- * connect 4 of your pieces in a row. The first player to do so wins. 
+ * Connect 4 with two modes. PVP and PVC. The goal of the game is to connect 4
+ * of your pieces in a row. The first player to do so wins.
  * 
  * 
  * @author Cox.N and DaSilva.D
  *
  */
-
 
 public class Board {
 	private Cell[][] board;
@@ -43,7 +43,8 @@ public class Board {
 
 	/**
 	 * drops the piece where the player chose
-	 * @param col column on board 
+	 * 
+	 * @param col    column on board
 	 * @param player P1 or P2
 	 */
 	public void dropPeice(int col, int player) {
@@ -89,6 +90,7 @@ public class Board {
 
 	/**
 	 * Checks if users input of column is valid
+	 * 
 	 * @param x column number
 	 * @return true if valid else false
 	 */
@@ -107,7 +109,7 @@ public class Board {
 	}
 
 	/**
-	 * Display Board 
+	 * Display Board
 	 */
 	public void display() {
 		System.out.println("BOARD");
@@ -119,10 +121,10 @@ public class Board {
 		}
 	}
 
-	
 	/**
 	 * determines if the game state should be over. If either the board is full or a
 	 * player connected 4 pieces.
+	 * 
 	 * @return True if game is over
 	 */
 	public boolean gameOver() {
@@ -204,7 +206,7 @@ public class Board {
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[i][i].getState() == CellState.P2) {
+				if (board[i][j].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
@@ -231,15 +233,14 @@ public class Board {
 			for (int j = 0; j <= k; j++) {
 				int i = k - j;
 
-				
-				if (board[i][j].getState() == CellState.P1) {
+				if (board[board[0].length - j - 1][board[0].length - i - 1].getState() == CellState.P1) {
 
 					diagonalCounterP1++;
 
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[j][i].getState() == CellState.P2) {
+				if (board[board[0].length - j - 1][board[0].length - i - 1].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
@@ -258,83 +259,76 @@ public class Board {
 				}
 
 			}
-			
 
 		}
 
-		
-		
-		//reverse diagonal (Bottom right to top left)
-		
+		// reverse diagonal (Bottom right to top left)
+
 		for (int i = board.length - 1; i > 0; i--) {
 			diagonalCounterP1 = 0;
 			diagonalCounterP2 = 0;
-		       //String temp = "";
-		       for (int j = 0, x = i; x <= board.length - 1; j++, x++) {
-		          //temp = temp + board[x][j];
-		    	   if (board[x][j].getState() == CellState.P1) {
-						diagonalCounterP1++;
 
-					} else {
-						diagonalCounterP1 = 0;
-					}
-					if (board[x][i].getState() == CellState.P2) {
-						diagonalCounterP2++;
-					} else {
-						diagonalCounterP2 = 0;
-					}
+			for (int j = 0, x = i; x <= board.length - 1; j++, x++) {
 
-					if (diagonalCounterP1 >= 4) {
-						gameOver = true;
-						System.out.println("GAME OVER Player 1 WINS!");
-						break;
-					}
-					if (diagonalCounterP2 >= 4) {
-						gameOver = true;
-						System.out.println("GAME OVER Player 2 WINS!");
-						break;
+				if (board[x][j].getState() == CellState.P1) {
+					diagonalCounterP1++;
 
-					}
-		       }
-		       //System.out.println(temp);
-		   }
-		
-		 
-		 for (int i = 0; i <= board.length - 1; i++) {
-			 	diagonalCounterP1 = 0;
-				diagonalCounterP2 = 0;
-		       // String temp = "";
-		        for (int j = 0, z = i; z <= board.length - 1; j++, z++) {
-		       // temp = temp+board[j][z];
-		        	if (board[j][z].getState() == CellState.P1) {
-						diagonalCounterP1++;
+				} else {
+					diagonalCounterP1 = 0;
+				}
+				if (board[x][i].getState() == CellState.P2) {
+					diagonalCounterP2++;
+				} else {
+					diagonalCounterP2 = 0;
+				}
 
-					} else {
-						diagonalCounterP1 = 0;
-					}
-					if (board[j][z].getState() == CellState.P2) {
-						diagonalCounterP2++;
-					} else {
-						diagonalCounterP2 = 0;
-					}
+				if (diagonalCounterP1 >= 4) {
+					gameOver = true;
+					System.out.println("GAME OVER Player 1 WINS!");
+					break;
+				}
+				if (diagonalCounterP2 >= 4) {
+					gameOver = true;
+					System.out.println("GAME OVER Player 2 WINS!");
+					break;
 
-					if (diagonalCounterP1 >= 4) {
-						gameOver = true;
-						System.out.println("GAME OVER Player 1 WINS!");
-						break;
-					}
-					if (diagonalCounterP2 >= 4) {
-						gameOver = true;
-						System.out.println("GAME OVER Player 2 WINS!");
-						break;
+				}
+			}
 
-					}
-		        }
-		       // System.out.println(temp);
-		   }
-		
-		
-		
+		}
+
+		for (int i = 0; i <= board.length - 1; i++) {
+			diagonalCounterP1 = 0;
+			diagonalCounterP2 = 0;
+
+			for (int j = 0, z = i; z <= board.length - 1; j++, z++) {
+
+				if (board[j][z].getState() == CellState.P1) {
+					diagonalCounterP1++;
+
+				} else {
+					diagonalCounterP1 = 0;
+				}
+				if (board[j][z].getState() == CellState.P2) {
+					diagonalCounterP2++;
+				} else {
+					diagonalCounterP2 = 0;
+				}
+
+				if (diagonalCounterP1 >= 4) {
+					gameOver = true;
+					System.out.println("GAME OVER Player 1 WINS!");
+					break;
+				}
+				if (diagonalCounterP2 >= 4) {
+					gameOver = true;
+					System.out.println("GAME OVER Player 2 WINS!");
+					break;
+
+				}
+			}
+
+		}
 
 		return gameOver;
 	}
