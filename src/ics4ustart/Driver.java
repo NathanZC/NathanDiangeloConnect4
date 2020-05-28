@@ -4,7 +4,14 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * Connect 4 with two modes. PVP and PVC. The goal of the game is to connect 4
+ * of your pieces in a row. The first player to do so wins.
+ * 
+ * 
+ * @author Cox.N and DaSilva.D
+ *
+ */
 public class Driver {
 
 	public static void main(String[] args) throws InterruptedException {
