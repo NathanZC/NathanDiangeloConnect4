@@ -87,7 +87,9 @@ public class Driver {
 					ptwoTurn = true;
 				} else if (ptwoTurn) {
 					System.out.println("AI's Turn");
-					column = rand.nextInt(7);
+					
+					column = board.bestMove();
+					
 					board.dropPeice(column, 2);
 					// to toggle turns
 					pOneTurn = true;

@@ -332,4 +332,9 @@ public class Board {
 
 		return gameOver;
 	}
+
+	public int bestMove() {
+		// TODO make recursive function using min max to return best possible move given the state of the board,
+		return 0;
+	}
 }
