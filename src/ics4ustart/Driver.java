@@ -16,6 +16,13 @@ public class Driver {
 
 	public static void main(String[] args) throws InterruptedException {
 
+		
+
+		
+		
+		
+		
+		
 		Random rand = new Random();
 
 		// Setup constants for the Board
@@ -24,7 +31,7 @@ public class Driver {
 		// create the board
 		Board board = new Board(ROWS, COLS);
 		String mode = selectGameMode();
-
+		
 		// Player VS player mode
 		if (mode.equals("PvP")) {
 			System.out.println("Playing vs player");
@@ -88,9 +95,9 @@ public class Driver {
 				} else if (ptwoTurn) {
 					System.out.println("AI's Turn");
 					
-					column = board.bestMove();
 					
-					board.dropPeice(column, 2);
+					board.dropPeice(bestMove(board), 2);
+					
 					// to toggle turns
 					pOneTurn = true;
 					ptwoTurn = false;
@@ -132,7 +139,7 @@ public class Driver {
 		boolean valid = false;
 		int column = 0;
 		Scanner in = new Scanner(System.in);
-
+		
 		System.out.print("Which Column (1-7) :");
 		column = Integer.parseInt(in.nextLine().trim());
 
@@ -141,6 +148,17 @@ public class Driver {
 		// wich is 1st index of the array of columns
 		return column - 1;
 
+	}
+	
+	
+	
+	//Initialize vars
+	ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
+	public static int bestMove(Board board) {
+		// TODO make recursive function using min max to return best possible move given the state of the board,
+		ArrayList<Integer> possibleMoves = board.getAllPossibleMoves();
+		System.out.println(possibleMoves);
+		return possibleMoves.get(0);
 	}
 
 }

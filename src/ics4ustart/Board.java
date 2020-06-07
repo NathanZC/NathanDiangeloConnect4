@@ -1,5 +1,6 @@
 package ics4ustart;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Random;
  */
 
 public class Board {
-	private Cell[][] board;
+	public Cell[][] board;
 	private int rows;
 	private int cols;
 
@@ -61,7 +62,7 @@ public class Board {
 	 * @param col column
 	 * @return row position
 	 */
-	private int nextAvalibleRowInCol(int col) {
+	public int nextAvalibleRowInCol(int col) {
 		boolean emptySpotFound = false;
 		int rowPosition = rows - 1;
 
@@ -108,6 +109,35 @@ public class Board {
 		return valid;
 	}
 
+	
+	
+
+	public ArrayList<Integer> getAllPossibleMoves() {
+		ArrayList<Integer> possibles = new ArrayList<Integer>();
+		for(int i = 0; i <board[1].length;i++) {
+			if(board[0][i].getState() == CellState.EMPTY) {
+				possibles.add(i);
+			}
+		}
+		return possibles;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Display Board
 	 */
@@ -333,8 +363,7 @@ public class Board {
 		return gameOver;
 	}
 
-	public int bestMove() {
-		// TODO make recursive function using min max to return best possible move given the state of the board,
-		return 0;
-	}
+	
+	
+
 }
