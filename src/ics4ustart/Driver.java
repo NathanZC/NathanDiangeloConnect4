@@ -16,13 +16,6 @@ public class Driver {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		
-
-		
-		
-		
-		
-		
 		Random rand = new Random();
 
 		// Setup constants for the Board
@@ -30,6 +23,11 @@ public class Driver {
 		final int COLS = 7;
 		// create the board
 		Board board = new Board(ROWS, COLS);
+		
+
+		
+		
+		
 		String mode = selectGameMode();
 		
 		// Player VS player mode
@@ -79,7 +77,7 @@ public class Driver {
 			boolean ptwoTurn = false;
 			// game loop
 			while (!board.gameOver()) {
-				board.display();
+				
 				if (pOneTurn) {
 					System.out.println("Your Turn");
 					column = getColumn();
@@ -92,19 +90,18 @@ public class Driver {
 					// to toggle turns
 					pOneTurn = false;
 					ptwoTurn = true;
+					board.display();
 				} else if (ptwoTurn) {
 					System.out.println("AI's Turn");
-					
-					
+					column = rand.nextInt(7);
 					board.dropPeice(bestMove(board), 2);
-					
 					// to toggle turns
 					pOneTurn = true;
 					ptwoTurn = false;
 				}
 
 			}
-			board.display();
+
 		}
 
 	}
@@ -153,12 +150,31 @@ public class Driver {
 	
 	
 	//Initialize vars
-	ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
+
 	public static int bestMove(Board board) {
 		// TODO make recursive function using min max to return best possible move given the state of the board,
 		ArrayList<Integer> possibleMoves = board.getAllPossibleMoves();
 		System.out.println(possibleMoves);
+		//make copy of the baord and use that in the minmax function
+		Board boardCopy = board.deepCloneBoard();
+		
+
+
+		//check if the board copys state is still linked in memory to the original board.
+		for(int i=0; i<possibleMoves.size();i++) {
+			
+		}
 		return possibleMoves.get(0);
 	}
+		
+
+
+	public static int minimax(Board board,int depth, boolean isMaximizing) {
+		// TODO make recursive function using min max to return best possible move given the state of the board,
+		ArrayList<Integer> possibleMoves = board.getAllPossibleMoves();
+		return possibleMoves.get(0);
+	}
+	
+	
 
 }
