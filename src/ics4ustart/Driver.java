@@ -37,7 +37,7 @@ public class Driver {
 			boolean pOneTurn = true;
 			boolean ptwoTurn = false;
 			// game loop
-			while (!board.gameOver()) {
+			while ((!board.gameOver()) && !(board.getAllPossibleMoves().size() == 0)) {
 				board.display();
 				if (pOneTurn) {
 					System.out.println("Player 1 turn");
@@ -66,6 +66,9 @@ public class Driver {
 				}
 
 			}
+			if(!board.gameOver()) {
+				System.out.println("TIE GAME!");
+			}
 			board.display();
 		}
 
@@ -73,10 +76,10 @@ public class Driver {
 		if (mode.equals("PvC")) {
 			System.out.println("Playing vs Computer");
 			int column = 0;
-			boolean pOneTurn = true;
-			boolean ptwoTurn = false;
+			boolean pOneTurn = false;
+			boolean ptwoTurn = true;
 			// game loop
-			while (!board.gameOver()) {
+			while (!board.gameOver() && !(board.getAllPossibleMoves().size() == 0) ) {
 				
 				if (pOneTurn) {
 					System.out.println("Your Turn");
@@ -93,13 +96,22 @@ public class Driver {
 					board.display();
 				} else if (ptwoTurn) {
 					System.out.println("AI's Turn");
-					column = rand.nextInt(7);
 					board.dropPeice(bestMove(board), 2);
 					// to toggle turns
 					pOneTurn = true;
 					ptwoTurn = false;
+					board.display();
 				}
 
+			}
+			if(board.checkWinner().equalsIgnoreCase("P1")) {
+				System.out.println("Player X wins");
+			}
+			else if(board.checkWinner().equalsIgnoreCase("P2")) {
+				System.out.println("Player O wins");
+			}
+			else{
+				System.out.println("Game is a tie");
 			}
 
 		}
@@ -157,22 +169,78 @@ public class Driver {
 		System.out.println(possibleMoves);
 		//make copy of the baord and use that in the minmax function
 		Board boardCopy = board.deepCloneBoard();
-		
-
-
+		//make initial score basically negative infinity so it will always pick a move with a higher score than this
+		int score = 0;
+		int bestScore = Integer.MIN_VALUE;
+		int move = 0;
 		//check if the board copys state is still linked in memory to the original board.
 		for(int i=0; i<possibleMoves.size();i++) {
+			boardCopy.dropPeice(possibleMoves.get(i), 2);
+			score = minimax(boardCopy,9,false);
+			if (score>bestScore) {
+				bestScore = score;
+				move = possibleMoves.get(i);
+			}
 			
 		}
-		return possibleMoves.get(0);
+		return move;
 	}
 		
 
 
 	public static int minimax(Board board,int depth, boolean isMaximizing) {
 		// TODO make recursive function using min max to return best possible move given the state of the board,
+		Board boardCopy = board.deepCloneBoard();
 		ArrayList<Integer> possibleMoves = board.getAllPossibleMoves();
-		return possibleMoves.get(0);
+		int score = 0;
+		//if terminal state 
+		if ((boardCopy.gameOver() || (boardCopy.getAllPossibleMoves().size() == 0) || depth == 0)) {
+			if (boardCopy.checkWinner().equalsIgnoreCase("P1")) {
+				return(-100);
+			}
+			else if(boardCopy.checkWinner().equalsIgnoreCase("P2")) {
+				return(100);
+			}
+			else if (boardCopy.getAllPossibleMoves().size() == 0) {
+				return(0);
+			}
+			//the depth is maxed out
+			else {
+				return(0);
+			}
+		} else {
+			if(isMaximizing) {
+				int bestScore = Integer.MIN_VALUE;
+				for(int i=0; i<possibleMoves.size();i++) {
+					boardCopy.dropPeice(possibleMoves.get(i), 2);
+					score = minimax(boardCopy,depth -1,false);
+					if (score>bestScore) {
+						bestScore = score;
+					}
+					
+				}
+				return(bestScore);
+				} else {
+					int bestScore = Integer.MAX_VALUE;
+					for(int i=0; i<possibleMoves.size();i++) {
+						boardCopy.dropPeice(possibleMoves.get(i), 1);
+						score = minimax(boardCopy,depth -1,true);
+						if (score<bestScore) {
+							bestScore = score;
+						}
+						
+					}
+					return(bestScore);
+				}
+			
+		}
+		
+		
+		
+		
+		
+		
+
 	}
 	
 	
