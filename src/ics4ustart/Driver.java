@@ -166,17 +166,17 @@ public class Driver {
 	public static int bestMove(Board board) {
 		// TODO make recursive function using min max to return best possible move given the state of the board,
 		ArrayList<Integer> possibleMoves = board.getAllPossibleMoves();
-		System.out.println(possibleMoves);
 		//make copy of the baord and use that in the minmax function
 		Board boardCopy = board.deepCloneBoard();
 		//make initial score basically negative infinity so it will always pick a move with a higher score than this
 		int score = 0;
 		int bestScore = Integer.MIN_VALUE;
 		int move = 0;
+		System.out.println("AI is Thinking");
 		//check if the board copys state is still linked in memory to the original board.
 		for(int i=0; i<possibleMoves.size();i++) {
 			boardCopy.dropPeice(possibleMoves.get(i), 2);
-			score = minimax(boardCopy,9,false);
+			score = minimax(boardCopy,8,false);
 			if (score>bestScore) {
 				bestScore = score;
 				move = possibleMoves.get(i);
@@ -196,10 +196,10 @@ public class Driver {
 		//if terminal state 
 		if ((boardCopy.gameOver() || (boardCopy.getAllPossibleMoves().size() == 0) || depth == 0)) {
 			if (boardCopy.checkWinner().equalsIgnoreCase("P1")) {
-				return(-100);
+				return(-10000000);
 			}
 			else if(boardCopy.checkWinner().equalsIgnoreCase("P2")) {
-				return(100);
+				return(10000000);
 			}
 			else if (boardCopy.getAllPossibleMoves().size() == 0) {
 				return(0);
