@@ -1,7 +1,6 @@
 package ics4ustart;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Connect 4 with two modes. PVP and PVC. The goal of the game is to connect 4
@@ -116,24 +115,6 @@ public class Board {
 		board[row][col].setState(state); 
 
 	}
-	public Board deepCloneBoard() {
-		// TODO takes the state of the board and clones another version of it with the same state but made from different memory.
-		
-		Board boardCopy = new Board(7,7);
-		for(int i =0;i < board[0].length; i++) {
-			for(int j =0 ; j <board[0].length;j++) {
-				CellState cs = CellState.EMPTY;
-				if (board[i][j].getState() == CellState.P1) {
-					cs = CellState.P1;
-				}
-				if (board[i][j].getState() == CellState.P2){
-					cs = CellState.P2;
-				}
-				boardCopy.setState(i, j, cs);
-			}
-		}
-		return boardCopy;
-	}
 
 	public ArrayList<Integer> getAllPossibleMoves() {
 		ArrayList<Integer> possibles = new ArrayList<Integer>();
@@ -144,22 +125,6 @@ public class Board {
 		}
 		return possibles;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Display Board
