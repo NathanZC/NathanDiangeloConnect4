@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 /**
  * Connect 4 with two modes. PVP and PVC. The goal of the game is to connect 4
  * of your pieces in a row. The first player to do so wins.
@@ -23,13 +24,9 @@ public class Driver {
 		final int COLS = 7;
 		// create the board
 		Board board = new Board(ROWS, COLS);
-		
 
-		
-		
-		
 		String mode = selectGameMode();
-		
+
 		// Player VS player mode
 		if (mode.equals("PvP")) {
 			System.out.println("Playing vs player");
@@ -66,7 +63,7 @@ public class Driver {
 				}
 
 			}
-			if(!board.gameOver()) {
+			if (!board.gameOver()) {
 				System.out.println("TIE GAME!");
 			}
 			board.display();
@@ -76,11 +73,11 @@ public class Driver {
 		if (mode.equals("PvC")) {
 			System.out.println("Playing vs Computer");
 			int column = 0;
-			boolean pOneTurn = false;
-			boolean ptwoTurn = true;
+			boolean pOneTurn = true;
+			boolean ptwoTurn = false;
 			// game loop
-			while (!board.gameOver() && !(board.getAllPossibleMoves().size() == 0) ) {
-				
+			while (!board.gameOver() && !(board.getAllPossibleMoves().size() == 0)) {
+
 				if (pOneTurn) {
 					System.out.println("Your Turn");
 					column = getColumn();
@@ -104,13 +101,11 @@ public class Driver {
 				}
 
 			}
-			if(board.checkWinner().equalsIgnoreCase("P1")) {
+			if (board.checkWinner().equalsIgnoreCase("P1")) {
 				System.out.println("Player X wins");
-			}
-			else if(board.checkWinner().equalsIgnoreCase("P2")) {
+			} else if (board.checkWinner().equalsIgnoreCase("P2")) {
 				System.out.println("Player O wins");
-			}
-			else{
+			} else {
 				System.out.println("Game is a tie");
 			}
 
@@ -148,7 +143,7 @@ public class Driver {
 		boolean valid = false;
 		int column = 0;
 		Scanner in = new Scanner(System.in);
-		
+
 		System.out.print("Which Column (1-7) :");
 		column = Integer.parseInt(in.nextLine().trim());
 
@@ -158,91 +153,87 @@ public class Driver {
 		return column - 1;
 
 	}
-	
-	
-	
-	//Initialize vars
+
+	// Initialize vars
 
 	public static int bestMove(Board board) {
-		// TODO make recursive function using min max to return best possible move given the state of the board,
+		// TODO make recursive function using min max to return best possible move given
+		// the state of the board,
 		ArrayList<Integer> possibleMoves = board.getAllPossibleMoves();
-		//make copy of the baord and use that in the minmax function
-		Board boardCopy = board.deepCloneBoard();
-		//make initial score basically negative infinity so it will always pick a move with a higher score than this
+		// make copy of the baord and use that in the minmax function
+		// make initial score basically negative infinity so it will always pick a move
+		// with a higher score than this
 		int score = 0;
 		int bestScore = Integer.MIN_VALUE;
 		int move = 0;
 		System.out.println("AI is Thinking");
-		//check if the board copys state is still linked in memory to the original board.
-		for(int i=0; i<possibleMoves.size();i++) {
-			boardCopy.dropPeice(possibleMoves.get(i), 2);
-			score = minimax(boardCopy,8,false);
-			if (score>bestScore) {
+		// check if the board copys state is still linked in memory to the original
+		// board.
+		for (int i = 0; i < possibleMoves.size(); i++) {
+			board.dropPeice(possibleMoves.get(i), 2);
+			// the 2nd input in the miximax function is the depth. The higher the depth the
+			// harder the ai will be to beat but the longer it will take to think.
+			score = minimax(board, 6, false);
+			board.undoMove(possibleMoves.get(i), 2);
+			System.out.println(score);
+			if (score > bestScore) {
 				bestScore = score;
 				move = possibleMoves.get(i);
 			}
-			
+
 		}
 		return move;
 	}
-		
 
-
-	public static int minimax(Board board,int depth, boolean isMaximizing) {
-		// TODO make recursive function using min max to return best possible move given the state of the board,
-		Board boardCopy = board.deepCloneBoard();
+	public static int minimax(Board board, int depth, boolean isMaximizing) {
+		// TODO make recursive function using min max to return best possible move given
+		// the state of the board,
 		ArrayList<Integer> possibleMoves = board.getAllPossibleMoves();
 		int score = 0;
-		//if terminal state 
-		if ((boardCopy.gameOver() || (boardCopy.getAllPossibleMoves().size() == 0) || depth == 0)) {
-			if (boardCopy.checkWinner().equalsIgnoreCase("P1")) {
-				return(-10000000);
+		// if terminal state
+		if ((board.gameOver() || (board.getAllPossibleMoves().size() == 0) || depth == 0)) {
+			if (board.checkWinner().equalsIgnoreCase("P1")) {
+				return (-10000000);
+			} else if (board.checkWinner().equalsIgnoreCase("P2")) {
+				return (10000000);
 			}
-			else if(boardCopy.checkWinner().equalsIgnoreCase("P2")) {
-				return(10000000);
+			// no moves left (tie)
+			else if (board.getAllPossibleMoves().size() == 0) {
+				return (0);
 			}
-			else if (boardCopy.getAllPossibleMoves().size() == 0) {
-				return(0);
-			}
-			//the depth is maxed out
+			// the depth is maxed out
 			else {
-				return(0);
+				return (0);
 			}
 		} else {
-			if(isMaximizing) {
+			if (isMaximizing) {
 				int bestScore = Integer.MIN_VALUE;
-				for(int i=0; i<possibleMoves.size();i++) {
-					boardCopy.dropPeice(possibleMoves.get(i), 2);
-					score = minimax(boardCopy,depth -1,false);
-					if (score>bestScore) {
+				for (int i = 0; i < possibleMoves.size(); i++) {
+					board.dropPeice(possibleMoves.get(i), 2);
+					score = minimax(board, depth - 1, false);
+					board.undoMove(possibleMoves.get(i), 2);
+					if (score > bestScore) {
 						bestScore = score;
 					}
-					
+
 				}
-				return(bestScore);
-				} else {
-					int bestScore = Integer.MAX_VALUE;
-					for(int i=0; i<possibleMoves.size();i++) {
-						boardCopy.dropPeice(possibleMoves.get(i), 1);
-						score = minimax(boardCopy,depth -1,true);
-						if (score<bestScore) {
-							bestScore = score;
-						}
-						
+				return (bestScore);
+			} else {
+				int bestScore = Integer.MAX_VALUE;
+				for (int i = 0; i < possibleMoves.size(); i++) {
+					board.dropPeice(possibleMoves.get(i), 1);
+					score = minimax(board, depth - 1, true);
+					board.undoMove(possibleMoves.get(i), 1);
+					if (score < bestScore) {
+						bestScore = score;
 					}
-					return(bestScore);
+
 				}
-			
+				return (bestScore);
+			}
+
 		}
-		
-		
-		
-		
-		
-		
 
 	}
-	
-	
 
 }

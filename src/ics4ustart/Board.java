@@ -370,7 +370,8 @@ public class Board {
 		return("NONE");
 
 	}
-
+	
+	
 	public boolean gameOver() {
 		boolean gameOver = false;
 		// checks to see if player got 4 horizontally in a row
@@ -575,6 +576,16 @@ public class Board {
 		}
 
 		return gameOver;
+	}
+
+	public void undoMove(int col, int player) {
+
+		if (player == 1) {
+			board[nextAvalibleRowInCol(col)+1][col].setState(CellState.EMPTY);
+		} else if (player == 2) {
+			board[nextAvalibleRowInCol(col)+1][col].setState(CellState.EMPTY);
+		}
+
 	}
 	
 
