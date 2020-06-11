@@ -17,7 +17,7 @@ public class Driver {
 	public static void main(String[] args) throws InterruptedException {
 
 		// Setup constants for the Board
-		final int ROWS = 7;
+		final int ROWS = 6;
 		final int COLS = 7;
 		// create the board
 		Board board = new Board(ROWS, COLS);
@@ -166,7 +166,7 @@ public class Driver {
 			// the 2nd input in the miximax function is the depth. The higher the depth the
 			// harder the ai will be to beat but the longer it will take to think.
 			
-			score = minimax(board, 9, false, alpha, beta);
+			score = minimax(board, 10, false, alpha, beta);
 			board.undoMove(possibleMoves.get(i), 2);
 			System.out.println(score);
 			if (score > bestScore) {
@@ -194,10 +194,10 @@ public class Driver {
 			else if (board.getAllPossibleMoves().size() == 0) {
 				return (0);
 			}
-			// could create a function to evalute the current state of the board for when
-			// the depth is maxed out so the ai can know what moves are better going into the
-			// future.
 			else {
+				// could create a function to evalute the current state of the board for when
+				// the depth is maxed out so the ai can know what moves are better going into the
+				// future and not just move at the same stop every time all the current moves have the same value
 				return (0);
 			}
 		} else {
@@ -212,7 +212,6 @@ public class Driver {
 					if (beta <= alpha) {
 						break;
 					}
-
 				}
 				return (bestScore);
 			} else {

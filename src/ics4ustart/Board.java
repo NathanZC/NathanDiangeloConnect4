@@ -165,12 +165,14 @@ public class Board {
 				}
 
 				if (horizontalCounterP2 >= 4) {
-
 					return("P2");
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 				}
 				if (horizontalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 
 				}
 			}
@@ -196,16 +198,18 @@ public class Board {
 
 				if (verticalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (verticalCounterP2 >= 4) {
 					return("P2");
-
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 			}
-		}
-//both of these only check the diagonals from the left side to the right side (Bottom left to top right)
+		}																								 
+//both of these only check the diagonals from the left side to the right side (Bottom left to top right /)
 		int diagonalCounterP1 = 0;
 		int diagonalCounterP2 = 0;
 		for (int k = 0; k < board.length; k++) {
@@ -227,11 +231,13 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
-
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 
@@ -242,16 +248,16 @@ public class Board {
 			diagonalCounterP1 = 0;
 			diagonalCounterP2 = 0;
 			for (int j = 0; j <= k; j++) {
-				int i = k - j;
+				int i = k - j - 1;
 
-				if (board[board[0].length - j - 1][board[0].length - i - 1].getState() == CellState.P1) {
+				if (board[board[0].length - j - 2][board[0].length - i - 2].getState() == CellState.P1) {
 
 					diagonalCounterP1++;
 
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[board[0].length - j - 1][board[0].length - i - 1].getState() == CellState.P2) {
+				if (board[board[0].length - j - 2][board[0].length - i - 2].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
@@ -259,11 +265,13 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
-
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 
@@ -273,7 +281,7 @@ public class Board {
 
 		// reverse diagonal (Bottom right to top left)
 
-		for (int i = board.length - 1; i > 0; i--) {
+		for (int i = board.length - 1; i >= 0; i--) {
 			diagonalCounterP1 = 0;
 			diagonalCounterP2 = 0;
 
@@ -293,10 +301,13 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 			}
@@ -309,13 +320,13 @@ public class Board {
 
 			for (int j = 0, z = i; z <= board.length - 1; j++, z++) {
 
-				if (board[j][z].getState() == CellState.P1) {
+				if (board[j][z + 1].getState() == CellState.P1) {
 					diagonalCounterP1++;
 
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[j][z].getState() == CellState.P2) {
+				if (board[j][z + 1].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
@@ -323,18 +334,23 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
+					//System.out.println("GAME OVER Player 1 WINS!");
 
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
+					//System.out.println("GAME OVER Player 2 WINS!");
 
 				}
 			}
 
 		}
-		return("NONE");
 
+		return("NONE");
 	}
+	
+	
+	
 	
 	
 	public boolean gameOver() {
@@ -401,8 +417,8 @@ public class Board {
 
 				}
 			}
-		}
-//both of these only check the diagonals from the left side to the right side (Bottom left to top right)
+		}																								 
+//both of these only check the diagonals from the left side to the right side (Bottom left to top right /)
 		int diagonalCounterP1 = 0;
 		int diagonalCounterP2 = 0;
 		for (int k = 0; k < board.length; k++) {
@@ -441,16 +457,16 @@ public class Board {
 			diagonalCounterP1 = 0;
 			diagonalCounterP2 = 0;
 			for (int j = 0; j <= k; j++) {
-				int i = k - j;
+				int i = k - j - 1;
 
-				if (board[board[0].length - j - 1][board[0].length - i - 1].getState() == CellState.P1) {
+				if (board[board[0].length - j - 2][board[0].length - i - 2].getState() == CellState.P1) {
 
 					diagonalCounterP1++;
 
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[board[0].length - j - 1][board[0].length - i - 1].getState() == CellState.P2) {
+				if (board[board[0].length - j - 2][board[0].length - i - 2].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
@@ -474,7 +490,7 @@ public class Board {
 
 		// reverse diagonal (Bottom right to top left)
 
-		for (int i = board.length - 1; i > 0; i--) {
+		for (int i = board.length - 1; i >= 0; i--) {
 			diagonalCounterP1 = 0;
 			diagonalCounterP2 = 0;
 
@@ -513,13 +529,13 @@ public class Board {
 
 			for (int j = 0, z = i; z <= board.length - 1; j++, z++) {
 
-				if (board[j][z].getState() == CellState.P1) {
+				if (board[j][z + 1].getState() == CellState.P1) {
 					diagonalCounterP1++;
 
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[j][z].getState() == CellState.P2) {
+				if (board[j][z + 1].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
