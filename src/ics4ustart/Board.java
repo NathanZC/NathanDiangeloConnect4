@@ -165,12 +165,14 @@ public class Board {
 				}
 
 				if (horizontalCounterP2 >= 4) {
-
 					return("P2");
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 				}
 				if (horizontalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 
 				}
 			}
@@ -196,16 +198,18 @@ public class Board {
 
 				if (verticalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (verticalCounterP2 >= 4) {
 					return("P2");
-
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 			}
-		}
-//both of these only check the diagonals from the left side to the right side (Bottom left to top right)
+		}																								 
+//both of these only check the diagonals from the left side to the right side (Bottom left to top right /)
 		int diagonalCounterP1 = 0;
 		int diagonalCounterP2 = 0;
 		for (int k = 0; k < board.length; k++) {
@@ -227,11 +231,13 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
-
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 
@@ -259,11 +265,13 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
-
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 
@@ -293,10 +301,13 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
-
+					//System.out.println("GAME OVER Player 1 WINS!");
+				
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
+					//System.out.println("GAME OVER Player 2 WINS!");
+				
 
 				}
 			}
@@ -323,18 +334,23 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					return("P1");
+					//System.out.println("GAME OVER Player 1 WINS!");
 
 				}
 				if (diagonalCounterP2 >= 4) {
 					return("P2");
+					//System.out.println("GAME OVER Player 2 WINS!");
 
 				}
 			}
 
 		}
-		return("NONE");
 
+		return("NONE");
 	}
+	
+	
+	
 	
 	
 	public boolean gameOver() {
