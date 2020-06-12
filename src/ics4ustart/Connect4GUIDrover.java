@@ -102,7 +102,7 @@ public class Connect4GUIDrover extends Application {
 
 					}
 					board.display();
-					if (board.gameOver()) {
+					if (board.gameOver() || board.getAllPossibleMoves().size() == 0) {
 						for (Button button : buttonArray) {
 							button.setDisable(true);
 
@@ -113,7 +113,7 @@ public class Connect4GUIDrover extends Application {
 							box.getChildren().add(title);
 							
 							
-						} else {title2.setFont(font);
+						} else if(board.checkWinner().equalsIgnoreCase("P2")) {title2.setFont(font);
 						box.getChildren().add(title2);
 
 						}
@@ -182,6 +182,7 @@ public class Connect4GUIDrover extends Application {
 
 		VBox box2 = new VBox();
 		box2.setPadding(new Insets(20.0, 20.0, 20.0, 50.0));
+		
 		box2.getChildren().add(button4);
 
 		Canvas canvas2 = new Canvas(canvasWidth, canvasHeight);
@@ -221,7 +222,7 @@ public class Connect4GUIDrover extends Application {
 					repaintCanvas(gc2, board2);
 
 					board2.display();
-					if (board2.gameOver()) {
+					if (board2.gameOver() || board2.getAllPossibleMoves().size() == 0) {
 						for (Button button2 : buttonArray2) {
 							button2.setDisable(true);
 							
@@ -230,10 +231,11 @@ public class Connect4GUIDrover extends Application {
 						if (board2.checkWinner().equalsIgnoreCase("P1")) {
 							title.setFont(font);
 							box2.getChildren().add(title);
-						} else {title2.setFont(font);
+						} else if(board2.checkWinner().equalsIgnoreCase("P2")) {title2.setFont(font);
 						box2.getChildren().add(title2);
 
 						}
+						
 
 					}
 
@@ -320,34 +322,8 @@ public class Connect4GUIDrover extends Application {
 		drawBoard(gc, board);
 	}
 
-	private static int getColumn() {
+	
 
-		int column = 0;
-		Scanner in = new Scanner(System.in);
-
-		System.out.print("Which Column (1-7) :");
-		column = Integer.parseInt(in.nextLine().trim());
-
-		// -1 so the first index of the columns will be 0 so if they input 1 it will be
-		// 0
-		// wich is 1st index of the array of columns
-		return column - 1;
-
-	}
-
-	private void getButton(Button[] buttonArray, Board board) {
-
-		for (Button b : buttonArray) {
-			System.out.println(b);
-			b.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					board.dropPeice(Integer.valueOf(b.getId()), 1);
-				}
-
-			});
-		}
-	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

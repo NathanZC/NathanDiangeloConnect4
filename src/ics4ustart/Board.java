@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 public class Board {
 	public Cell[][] board;
 	private int rows;
-	
+
 	private int cols;
 
 	public Board(int aRows, int aCols) {
@@ -29,31 +29,29 @@ public class Board {
 				board[i][j] = new Cell(CellState.EMPTY); // no color
 			}
 		}
-	
-	
-	
+
 	}
-	
+
 	public void resetState() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                board[i][j] = new Cell(CellState.EMPTY); // no color
-            }
-        }
-    }
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				board[i][j] = new Cell(CellState.EMPTY); // no color
+			}
+		}
+	}
+
 	public int getData(int row, int col) {
-		
+
 		CellState x = board[row][col].getState();
-		
-		if(x == CellState.P1) {
+
+		if (x == CellState.P1) {
 			return 1;
 		}
-		if(x == CellState.P2) {
+		if (x == CellState.P2) {
 			return 2;
 		}
 		return 0;
 	}
-	
 
 	/**
 	 * @return rows
@@ -61,15 +59,193 @@ public class Board {
 	public int getRows() {
 		return rows;
 	}
-	
-	
-	
 
 	/**
 	 * @return cols
 	 */
 	public int getCols() {
 		return cols;
+	}
+
+	int calculateScore(int aiScore, int additionalMoves) {
+		int moveScore = 4 - additionalMoves;
+		if (aiScore == 0)
+			return 0;
+		else if (aiScore == 1)
+			return 1 * moveScore;
+		else if (aiScore == 2)
+			return 10 * moveScore;
+		else if (aiScore == 3)
+			return 100 * moveScore;
+		else
+			return 1000;
+	}
+
+	/**
+	 * Evaluates the state of the board based on the pieces
+	 * 
+	 * @return
+	 */
+	public int evaluateState() {
+		int aiScore = 1;
+		int score = 0;
+		int emptySpace = 0;
+		int k = 0, additionalMoves = 0;
+		for (int i = 5; i >= 0; --i) {
+			for (int j = 0; j <= 6; ++j) {
+
+				if (board[i][j].getState() == CellState.EMPTY || board[i][j].getState() == CellState.P2)
+					continue;
+
+				if (j <= 3) {
+					for (k = 1; k < 4; ++k) {
+						if (board[i][j + k].getState() == CellState.P1)
+							aiScore++;
+						else if (board[i][j + k].getState() == CellState.P2) {
+							aiScore = 0;
+							emptySpace = 0;
+							break;
+						} else
+							emptySpace++;
+					}
+
+					additionalMoves = 0;
+					if (emptySpace > 0)
+						for (int c = 1; c < 4; ++c) {
+							int column = j + c;
+							for (int m = i; m <= 5; m++) {
+								if (board[m][column].getState() == CellState.EMPTY)
+									additionalMoves++;
+								else
+									break;
+							}
+						}
+
+					if (additionalMoves != 0)
+						score += calculateScore(aiScore, additionalMoves);
+					aiScore = 1;
+					emptySpace = 0;
+				}
+
+				if (i >= 3) {
+					for (k = 1; k < 4; ++k) {
+						if (board[i - k][j].getState() == CellState.P1)
+							aiScore++;
+						else if (board[i - k][j].getState() == CellState.P2) {
+							aiScore = 0;
+							break;
+						}
+					}
+					additionalMoves = 0;
+
+					if (aiScore > 0) {
+						int column = j;
+						for (int m = i - k + 1; m <= i - 1; m++) {
+							if (board[m][column].getState() == CellState.EMPTY)
+								additionalMoves++;
+							else
+								break;
+						}
+					}
+					if (additionalMoves != 0)
+						score += calculateScore(aiScore, additionalMoves);
+					aiScore = 1;
+					emptySpace = 0;
+				}
+
+				if (j >= 3) {
+					for (k = 1; k < 4; ++k) {
+						if (board[i][j - k].getState() == CellState.P1)
+							aiScore++;
+						else if (board[i][j - k].getState() == CellState.P2) {
+							aiScore = 0;
+							emptySpace = 0;
+							break;
+						} else
+							emptySpace++;
+					}
+					additionalMoves = 0;
+					if (emptySpace > 0)
+						for (int c = 1; c < 4; ++c) {
+							int column = j - c;
+							for (int m = i; m <= 5; m++) {
+								if (board[m][column].getState() == CellState.EMPTY)
+									additionalMoves++;
+								else
+									break;
+							}
+						}
+
+					if (additionalMoves != 0)
+						score += calculateScore(aiScore, additionalMoves);
+					aiScore = 1;
+					emptySpace = 0;
+				}
+
+				if (j <= 3 && i >= 3) {
+					for (k = 1; k < 4; ++k) {
+						if (board[i - k][j + k].getState() == CellState.P1)
+							aiScore++;
+						else if (board[i - k][j + k].getState() == CellState.P2) {
+							aiScore = 0;
+							emptySpace = 0;
+							break;
+						} else
+							emptySpace++;
+					}
+					additionalMoves = 0;
+					if (emptySpace > 0) {
+						for (int c = 1; c < 4; ++c) {
+							int column = j + c, row = i - c;
+							for (int m = row; m <= 5; ++m) {
+								if (board[m][column].getState() == CellState.EMPTY)
+									additionalMoves++;
+								else if (board[m][column].getState() == CellState.P1)
+									;
+								else
+									break;
+							}
+						}
+						if (additionalMoves != 0)
+							score += calculateScore(aiScore, additionalMoves);
+						aiScore = 1;
+						emptySpace = 0;
+					}
+				}
+
+				if (i >= 3 && j >= 3) {
+					for (k = 1; k < 4; ++k) {
+						if (board[i - k][j - k].getState() == CellState.P1)
+							aiScore++;
+						else if (board[i - k][j - k].getState() == CellState.P2) {
+							aiScore = 0;
+							emptySpace = 0;
+							break;
+						} else
+							emptySpace++;
+					}
+					additionalMoves = 0;
+					if (emptySpace > 0) {
+						for (int c = 1; c < 4; ++c) {
+							int column = j - c, row = i - c;
+							for (int m = row; m <= 5; ++m) {
+								if (board[m][column].getState() == CellState.EMPTY)
+									additionalMoves++;
+								else if (board[m][column].getState() == CellState.P1)
+									;
+								else
+									break;
+							}
+						}
+						if (additionalMoves != 0)
+							score += calculateScore(aiScore, additionalMoves);
+						aiScore = 1;
+						emptySpace = 0;
+					}
+				}
+			}
+		}
+		return score;
 	}
 
 	/**
@@ -139,24 +315,24 @@ public class Board {
 		return valid;
 	}
 
-	
-	public void setState(int row,int col, CellState state ) {
-		// TODO takes the state of the board and clones another version of it with the same state but made from different memory.
-		
-		board[row][col].setState(state); 
+	public void setState(int row, int col, CellState state) {
+		// TODO takes the state of the board and clones another version of it with the
+		// same state but made from different memory.
+
+		board[row][col].setState(state);
 
 	}
 
 	public ArrayList<Integer> getAllPossibleMoves() {
 		ArrayList<Integer> possibles = new ArrayList<Integer>();
-		for(int i = 0; i <board[1].length;i++) {
-			if(board[0][i].getState() == CellState.EMPTY) {
+		for (int i = 0; i < board[1].length; i++) {
+			if (board[0][i].getState() == CellState.EMPTY) {
 				possibles.add(i);
 			}
 		}
 		return possibles;
 	}
-	
+
 	/**
 	 * Display Board
 	 */
@@ -196,14 +372,13 @@ public class Board {
 				}
 
 				if (horizontalCounterP2 >= 4) {
-					return("P2");
-					//System.out.println("GAME OVER Player 2 WINS!");
-				
+					return ("P2");
+					// System.out.println("GAME OVER Player 2 WINS!");
+
 				}
 				if (horizontalCounterP1 >= 4) {
-					return("P1");
-					//System.out.println("GAME OVER Player 1 WINS!");
-				
+					return ("P1");
+					// System.out.println("GAME OVER Player 1 WINS!");
 
 				}
 			}
@@ -228,18 +403,17 @@ public class Board {
 				}
 
 				if (verticalCounterP1 >= 4) {
-					return("P1");
-					//System.out.println("GAME OVER Player 1 WINS!");
-				
+					return ("P1");
+					// System.out.println("GAME OVER Player 1 WINS!");
+
 				}
 				if (verticalCounterP2 >= 4) {
-					return("P2");
-					//System.out.println("GAME OVER Player 2 WINS!");
-				
+					return ("P2");
+					// System.out.println("GAME OVER Player 2 WINS!");
 
 				}
 			}
-		}																								 
+		}
 //both of these only check the diagonals from the left side to the right side (Bottom left to top right /)
 		int diagonalCounterP1 = 0;
 		int diagonalCounterP2 = 0;
@@ -261,14 +435,13 @@ public class Board {
 				}
 
 				if (diagonalCounterP1 >= 4) {
-					return("P1");
-					//System.out.println("GAME OVER Player 1 WINS!");
-				
+					return ("P1");
+					// System.out.println("GAME OVER Player 1 WINS!");
+
 				}
 				if (diagonalCounterP2 >= 4) {
-					return("P2");
-					//System.out.println("GAME OVER Player 2 WINS!");
-				
+					return ("P2");
+					// System.out.println("GAME OVER Player 2 WINS!");
 
 				}
 
@@ -295,14 +468,13 @@ public class Board {
 				}
 
 				if (diagonalCounterP1 >= 4) {
-					return("P1");
-					//System.out.println("GAME OVER Player 1 WINS!");
-				
+					return ("P1");
+					// System.out.println("GAME OVER Player 1 WINS!");
+
 				}
 				if (diagonalCounterP2 >= 4) {
-					return("P2");
-					//System.out.println("GAME OVER Player 2 WINS!");
-				
+					return ("P2");
+					// System.out.println("GAME OVER Player 2 WINS!");
 
 				}
 
@@ -331,14 +503,13 @@ public class Board {
 				}
 
 				if (diagonalCounterP1 >= 4) {
-					return("P1");
-					//System.out.println("GAME OVER Player 1 WINS!");
-				
+					return ("P1");
+					// System.out.println("GAME OVER Player 1 WINS!");
+
 				}
 				if (diagonalCounterP2 >= 4) {
-					return("P2");
-					//System.out.println("GAME OVER Player 2 WINS!");
-				
+					return ("P2");
+					// System.out.println("GAME OVER Player 2 WINS!");
 
 				}
 			}
@@ -364,26 +535,22 @@ public class Board {
 				}
 
 				if (diagonalCounterP1 >= 4) {
-					return("P1");
-					//System.out.println("GAME OVER Player 1 WINS!");
+					return ("P1");
+					// System.out.println("GAME OVER Player 1 WINS!");
 
 				}
 				if (diagonalCounterP2 >= 4) {
-					return("P2");
-					//System.out.println("GAME OVER Player 2 WINS!");
+					return ("P2");
+					// System.out.println("GAME OVER Player 2 WINS!");
 
 				}
 			}
 
 		}
 
-		return("NONE");
+		return ("NONE");
 	}
-	
-	
-	
-	
-	
+
 	public boolean gameOver() {
 		boolean gameOver = false;
 		// checks to see if player got 4 horizontally in a row
@@ -406,12 +573,12 @@ public class Board {
 
 				if (horizontalCounterP2 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 2 WINS!");
+					// System.out.println("GAME OVER Player 2 WINS!");
 					break;
 				}
 				if (horizontalCounterP1 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 1 WINS!");
+					// System.out.println("GAME OVER Player 1 WINS!");
 					break;
 
 				}
@@ -438,17 +605,17 @@ public class Board {
 
 				if (verticalCounterP1 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 1 WINS!");
+					// System.out.println("GAME OVER Player 1 WINS!");
 					break;
 				}
 				if (verticalCounterP2 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 2 WINS!");
+					// System.out.println("GAME OVER Player 2 WINS!");
 					break;
 
 				}
 			}
-		}																								 
+		}
 //both of these only check the diagonals from the left side to the right side (Bottom left to top right /)
 		int diagonalCounterP1 = 0;
 		int diagonalCounterP2 = 0;
@@ -471,12 +638,12 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 1 WINS!");
+					// System.out.println("GAME OVER Player 1 WINS!");
 					break;
 				}
 				if (diagonalCounterP2 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 2 WINS!");
+					// System.out.println("GAME OVER Player 2 WINS!");
 					break;
 
 				}
@@ -505,12 +672,12 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 1 WINS!");
+					// System.out.println("GAME OVER Player 1 WINS!");
 					break;
 				}
 				if (diagonalCounterP2 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 2 WINS!");
+					// System.out.println("GAME OVER Player 2 WINS!");
 					break;
 
 				}
@@ -541,12 +708,12 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 1 WINS!");
+					// System.out.println("GAME OVER Player 1 WINS!");
 					break;
 				}
 				if (diagonalCounterP2 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 2 WINS!");
+					// System.out.println("GAME OVER Player 2 WINS!");
 					break;
 
 				}
@@ -574,12 +741,12 @@ public class Board {
 
 				if (diagonalCounterP1 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 1 WINS!");
+					// System.out.println("GAME OVER Player 1 WINS!");
 					break;
 				}
 				if (diagonalCounterP2 >= 4) {
 					gameOver = true;
-					//System.out.println("GAME OVER Player 2 WINS!");
+					// System.out.println("GAME OVER Player 2 WINS!");
 					break;
 
 				}
@@ -593,12 +760,11 @@ public class Board {
 	public void undoMove(int col, int player) {
 
 		if (player == 1) {
-			board[nextAvalibleRowInCol(col)+1][col].setState(CellState.EMPTY);
+			board[nextAvalibleRowInCol(col) + 1][col].setState(CellState.EMPTY);
 		} else if (player == 2) {
-			board[nextAvalibleRowInCol(col)+1][col].setState(CellState.EMPTY);
+			board[nextAvalibleRowInCol(col) + 1][col].setState(CellState.EMPTY);
 		}
 
 	}
-	
 
 }

@@ -208,7 +208,7 @@ public class Driver {
 			// the depth is maxed out so the ai can know what moves are better going into the
 			// future.
 			else {
-				return (0);
+				return board.evaluateState();
 			}
 		} else {
 			if (isMaximizing) {
