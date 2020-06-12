@@ -165,10 +165,10 @@ public class Driver {
 			board.dropPeice(possibleMoves.get(i), 2);
 			// the 2nd input in the miximax function is the depth. The higher the depth the
 			// harder the ai will be to beat but the longer it will take to think.
-			
 			score = minimax(board, 10, false, alpha, beta);
 			board.undoMove(possibleMoves.get(i), 2);
 			System.out.println(score);
+			
 			if (score > bestScore) {
 				bestScore = score;
 				move = possibleMoves.get(i);

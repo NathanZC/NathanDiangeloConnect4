@@ -349,7 +349,13 @@ public class Board {
 		return("NONE");
 	}
 	
-	
+	public void resetState() {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				board[i][j] = new Cell(CellState.EMPTY); // no color
+			}
+		}
+	}
 	
 	
 	
@@ -565,6 +571,32 @@ public class Board {
 			board[nextAvalibleRowInCol(col)+1][col].setState(CellState.EMPTY);
 		} else if (player == 2) {
 			board[nextAvalibleRowInCol(col)+1][col].setState(CellState.EMPTY);
+		}
+
+	}
+	
+	public int calculateBoardState(boolean isP1) {
+		int score = 0;
+		if(isP1) {
+			
+			
+			
+			
+			
+			
+			
+			
+			return(score);
+		} else {
+			
+			
+			
+			
+			
+			
+			
+			
+			return(score);
 		}
 
 	}
