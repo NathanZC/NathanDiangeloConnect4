@@ -34,7 +34,13 @@ public class Board {
 	
 	}
 	
-	
+	public void resetState() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                board[i][j] = new Cell(CellState.EMPTY); // no color
+            }
+        }
+    }
 	public int getData(int row, int col) {
 		
 		CellState x = board[row][col].getState();
