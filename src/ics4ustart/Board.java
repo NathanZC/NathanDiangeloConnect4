@@ -324,7 +324,7 @@ public class Board {
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[x][i].getState() == CellState.P2) {
+				if (board[x][j].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
@@ -533,7 +533,7 @@ public class Board {
 				} else {
 					diagonalCounterP1 = 0;
 				}
-				if (board[x][i].getState() == CellState.P2) {
+				if (board[x][j].getState() == CellState.P2) {
 					diagonalCounterP2++;
 				} else {
 					diagonalCounterP2 = 0;
