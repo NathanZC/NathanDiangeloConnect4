@@ -2,6 +2,9 @@ package ics4ustart;
 
 import java.util.ArrayList;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 /**
  * Connect 4 with two modes. PVP and PVC. The goal of the game is to connect 4
  * of your pieces in a row. The first player to do so wins.
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 public class Board {
 	public Cell[][] board;
 	private int rows;
+	
 	private int cols;
 
 	public Board(int aRows, int aCols) {
@@ -25,7 +29,25 @@ public class Board {
 				board[i][j] = new Cell(CellState.EMPTY); // no color
 			}
 		}
+	
+	
+	
 	}
+	
+	
+	public int getData(int row, int col) {
+		
+		CellState x = board[row][col].getState();
+		
+		if(x == CellState.P1) {
+			return 1;
+		}
+		if(x == CellState.P2) {
+			return 2;
+		}
+		return 0;
+	}
+	
 
 	/**
 	 * @return rows
@@ -33,6 +55,9 @@ public class Board {
 	public int getRows() {
 		return rows;
 	}
+	
+	
+	
 
 	/**
 	 * @return cols

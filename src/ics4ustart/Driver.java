@@ -19,6 +19,10 @@ public class Driver {
 		// Setup constants for the Board
 		final int ROWS = 6;
 		final int COLS = 7;
+		
+		
+		
+		
 		// create the board
 		Board board = new Board(ROWS, COLS);
 
@@ -178,6 +182,12 @@ public class Driver {
 		return move;
 	}
 
+	
+	
+	
+
+	
+	
 	public static int minimax(Board board, int depth, boolean isMaximizing, int alpha, int beta) {
 		// TODO make recursive function using min max to return best possible move given
 		// the state of the board,
